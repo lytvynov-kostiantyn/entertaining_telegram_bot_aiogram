@@ -1,5 +1,23 @@
 import requests
 import os
+from pprint import pprint
+
+directions = {
+    0: 'North',
+    1: 'Northeast',
+    2: 'East',
+    3: 'Southeast',
+    4: 'South',
+    5: 'Southwest',
+    6: 'West',
+    7: 'Northwest',
+
+}
+
+
+def wind_convert(deg: int) -> str:
+    direction = round(deg / 45)
+    return directions[direction]
 
 
 def get_weather(city: str):
@@ -13,14 +31,18 @@ def get_weather(city: str):
         return weather
     else:
         data = response.json()
-
+        # pprint(data)
         weather = {
             'Country': data['sys']['country'],
             'City': data['name'],
-            'Longitude': data['coord']['lon'],
-            'Latitude': data['coord']['lat'],
             'Weather': data['weather'][0]['main'],
             'Temperature': data['main']['temp'],
+            'Temperature(feels like)': data['main']['feels_like'],
+            'Wind': wind_convert(data['wind']['deg']),
+            'Wind speed (m/s)': data['wind']['speed'],
         }
 
         return weather
+
+
+# pprint(get_weather('odesa'))
