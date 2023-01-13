@@ -11,6 +11,7 @@ directions = {
     5: 'Southwest',
     6: 'West',
     7: 'Northwest',
+    8: 'North',
 
 }
 
@@ -20,7 +21,7 @@ def wind_convert(deg: int) -> str:
     return directions[direction]
 
 
-def get_weather(city: str):
+def get_weather(city: str) -> dict:
     key = os.getenv('WEATHER_API_KEY')
     weather = dict()
     try:
@@ -30,19 +31,20 @@ def get_weather(city: str):
     except requests.exceptions.RequestException:
         return weather
     else:
-        data = response.json()
-        # pprint(data)
-        weather = {
-            'Country': data['sys']['country'],
-            'City': data['name'],
-            'Weather': data['weather'][0]['main'],
-            'Temperature': data['main']['temp'],
-            'Temperature(feels like)': data['main']['feels_like'],
-            'Wind': wind_convert(data['wind']['deg']),
-            'Wind speed (m/s)': data['wind']['speed'],
-        }
+        if response.status_code == 200:
+            data = response.json()
+            # pprint(data)
+            weather = {
+                'Country': data['sys']['country'],
+                'City': data['name'],
+                'Weather': data['weather'][0]['main'],
+                'Temperature': data['main']['temp'],
+                'Temperature(feels like)': data['main']['feels_like'],
+                'Wind': wind_convert(data['wind']['deg']),
+                'Wind speed (m/s)': data['wind']['speed'],
+            }
 
         return weather
 
-
-# pprint(get_weather('odesa'))
+# pprint(get_weather('123'))
+pprint(get_weather('odesa'))

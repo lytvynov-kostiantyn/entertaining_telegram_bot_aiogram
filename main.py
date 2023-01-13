@@ -1,6 +1,6 @@
 import requests
-import json
 from pprint import pprint
+import weather
 
 
 def get_location() -> str:
@@ -13,4 +13,5 @@ def get_location() -> str:
         return data.get('city')
 
 
-print(get_location())
+def weather_result(city: str):
+    pass
