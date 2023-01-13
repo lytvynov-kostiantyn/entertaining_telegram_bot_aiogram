@@ -2,7 +2,7 @@ import logging
 from aiogram import Bot, Dispatcher, executor, types
 import os
 
-import main
+import logic
 import weather
 import buttons
 
@@ -36,10 +36,17 @@ async def with_puree(callback_query: types.CallbackQuery):
     await bot.answer_callback_query(callback_query.id)
     await bot.send_message(
         callback_query.from_user.id,
-        text='',
+        text=logic.weather_result(logic.get_location()),
     )
 
 
+@dp.callback_query_handler(text='city_weather')
+async def with_puree(callback_query: types.CallbackQuery):
+    await bot.answer_callback_query(callback_query.id)
+    await bot.send_message(
+        callback_query.from_user.id,
+        text='Enter the name of the city:',
+    )
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)

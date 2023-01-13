@@ -38,13 +38,13 @@ def get_weather(city: str) -> dict:
                 'Country': data['sys']['country'],
                 'City': data['name'],
                 'Weather': data['weather'][0]['main'],
-                'Temperature': data['main']['temp'],
-                'Temperature(feels like)': data['main']['feels_like'],
-                'Wind': wind_convert(data['wind']['deg']),
-                'Wind speed (m/s)': data['wind']['speed'],
+                'Temperature, °C': data['main']['temp'],
+                'Temperature(feels like), °C': data['main']['feels_like'],
+                'Wind direction': wind_convert(data['wind']['deg']),
+                'Wind speed, m/s': data['wind']['speed'],
             }
 
         return weather
 
 # pprint(get_weather('123'))
-pprint(get_weather('odesa'))
+# pprint(get_weather('odesa'))

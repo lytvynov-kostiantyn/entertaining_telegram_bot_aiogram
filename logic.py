@@ -14,4 +14,12 @@ def get_location() -> str:
 
 
 def weather_result(city: str):
-    pass
+    data = weather.get_weather(city)
+    if not data:
+        return 'The server is not responding, please try again later or contact administrator.'
+    else:
+        result = ''.join([f'{key}: {value}\n' for key, value in data.items()])
+        return result
+
+
+# print(weather_result('123'))
