@@ -16,7 +16,7 @@ dp = Dispatcher(bot)
 async def main(message: types.Message):
     await message.answer(
         text="Hello, choose one of the menu items:",
-        reply_markup=buttons.WEATHER
+        reply_markup=buttons.MENU
     )
 
 
@@ -50,10 +50,18 @@ async def with_puree(callback_query: types.CallbackQuery):
 
 @dp.message_handler(content_types=['text'])
 async def get_text_messages(msg: types.Message):
-   if msg.text.lower() == 'привет':
-       await msg.answer('Привет!')
-   else:
-       await msg.answer('Не понимаю, что это значит.')
+    await msg.answer(
+       text=logic.weather_result(msg.text)
+    )
+
+
+@dp.callback_query_handler(text='exchange_rate')
+async def with_puree(callback_query: types.CallbackQuery):
+    await bot.answer_callback_query(callback_query.id)
+    await bot.send_message(
+        callback_query.from_user.id,
+        text=logic.get_rates(),
+    )
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
