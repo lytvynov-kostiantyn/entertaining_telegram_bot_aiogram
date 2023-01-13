@@ -6,7 +6,7 @@ from pprint import pprint
 def get_location() -> str:
     try:
         response = requests.get('http://ipinfo.io/json')
-    except:
+    except requests.exceptions.RequestException:
         return 'Invalid request'
     else:
         data = response.json()
