@@ -3,7 +3,6 @@ from aiogram import Bot, Dispatcher, executor, types
 import os
 
 import logic
-import weather
 import buttons
 
 
@@ -47,6 +46,14 @@ async def with_puree(callback_query: types.CallbackQuery):
         callback_query.from_user.id,
         text='Enter the name of the city:',
     )
+
+
+@dp.message_handler(content_types=['text'])
+async def get_text_messages(msg: types.Message):
+   if msg.text.lower() == 'привет':
+       await msg.answer('Привет!')
+   else:
+       await msg.answer('Не понимаю, что это значит.')
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
