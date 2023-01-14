@@ -35,8 +35,16 @@ async def with_puree(callback_query: types.CallbackQuery):
     await bot.answer_callback_query(callback_query.id)
     await bot.send_message(
         callback_query.from_user.id,
-        text=logic.weather_result(logic.get_location()),
+        text='Submit your location:',
     )
+
+
+@dp.message_handler(content_types=['location'])
+async def handle_location(message: types.Message):
+    lat = message.location.latitude
+    lon = message.location.longitude
+    reply = "latitude:  {}\nlongitude: {}".format(lat, lon)
+    await message.answer(reply, reply_markup=types.ReplyKeyboardRemove())
 
 
 @dp.callback_query_handler(text='city_weather')
@@ -51,7 +59,7 @@ async def with_puree(callback_query: types.CallbackQuery):
 @dp.message_handler(content_types=['text'])
 async def get_text_messages(msg: types.Message):
     await msg.answer(
-       text=logic.weather_result(msg.text)
+       text=logic.weather_city(msg.text)
     )
 
 

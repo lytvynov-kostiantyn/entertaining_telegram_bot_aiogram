@@ -4,17 +4,7 @@ import weather
 import rate
 
 
-def get_location() -> str:
-    try:
-        response = requests.get('http://ipinfo.io/json')
-    except requests.exceptions.RequestException:
-        return 'Invalid request'
-    else:
-        data = response.json()
-        return data.get('city')
-
-
-def weather_result(city: str):
+def weather_city(city: str):
     # checking a string for digits
     if any(ch.isdigit() for ch in city):
         return 'Invalid input'
