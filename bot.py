@@ -1,6 +1,7 @@
 import logging
 from aiogram import Bot, Dispatcher, executor, types
 import os
+import emoji
 
 import logic
 import buttons
@@ -15,7 +16,11 @@ dp = Dispatcher(bot)
 @dp.message_handler(commands=['start'])
 async def main(message: types.Message):
     await message.answer(
-        text="Hello, choose one of the menu items:",
+        text='Hello ' + emoji.emojize(":waving_hand:"),
+        reply_markup=buttons.kb_client
+    )
+    await message.answer(
+        text="Choose one of the menu items:",
         reply_markup=buttons.MENU
     )
 
