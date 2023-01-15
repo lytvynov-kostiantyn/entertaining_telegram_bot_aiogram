@@ -43,8 +43,9 @@ async def with_puree(callback_query: types.CallbackQuery):
 async def handle_location(message: types.Message):
     lat = message.location.latitude
     lon = message.location.longitude
-    reply = "latitude:  {}\nlongitude: {}".format(lat, lon)
-    await message.answer(reply, reply_markup=types.ReplyKeyboardRemove())
+    await message.answer(
+        text=logic.weather(lat, lon)
+    )
 
 
 @dp.callback_query_handler(text='city_weather')
@@ -59,7 +60,7 @@ async def with_puree(callback_query: types.CallbackQuery):
 @dp.message_handler(content_types=['text'])
 async def get_text_messages(msg: types.Message):
     await msg.answer(
-       text=logic.weather_city(msg.text)
+       text=logic.weather(msg.text)
     )
 
 
