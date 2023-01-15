@@ -20,8 +20,19 @@ async def main(message: types.Message):
     )
 
 
+@dp.message_handler(commands=['help'])
+async def handle_help_command(message: types.Message):
+    await message.answer(text="""
+Bot features:
+1. Show current weather;
+- Show the current weather for your location (you must attach your current location to the message);
+- Show the weather in the city you specified;
+2. Show the official hryvnia exchange rate set by the national bank.
+""")
+
+
 @dp.callback_query_handler(text='weather')
-async def with_puree(callback_query: types.CallbackQuery):
+async def weather_select(callback_query: types.CallbackQuery):
     await bot.answer_callback_query(callback_query.id)
     await bot.send_message(
         callback_query.from_user.id,
@@ -31,7 +42,7 @@ async def with_puree(callback_query: types.CallbackQuery):
 
 
 @dp.callback_query_handler(text='local_weather')
-async def with_puree(callback_query: types.CallbackQuery):
+async def weather_in_location(callback_query: types.CallbackQuery):
     await bot.answer_callback_query(callback_query.id)
     await bot.send_message(
         callback_query.from_user.id,
@@ -49,7 +60,7 @@ async def handle_location(message: types.Message):
 
 
 @dp.callback_query_handler(text='city_weather')
-async def with_puree(callback_query: types.CallbackQuery):
+async def weather_in_city(callback_query: types.CallbackQuery):
     await bot.answer_callback_query(callback_query.id)
     await bot.send_message(
         callback_query.from_user.id,
@@ -58,19 +69,20 @@ async def with_puree(callback_query: types.CallbackQuery):
 
 
 @dp.message_handler(content_types=['text'])
-async def get_text_messages(msg: types.Message):
+async def get_city_name(msg: types.Message):
     await msg.answer(
        text=logic.weather(msg.text)
     )
 
 
 @dp.callback_query_handler(text='exchange_rate')
-async def with_puree(callback_query: types.CallbackQuery):
+async def exchange_rate_select(callback_query: types.CallbackQuery):
     await bot.answer_callback_query(callback_query.id)
     await bot.send_message(
         callback_query.from_user.id,
         text=logic.get_rates(),
     )
+
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)

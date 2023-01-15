@@ -1,9 +1,10 @@
 import openweathermap
 import rate
 from geopy import Nominatim
+import asyncio
 
 
-def weather(*args):
+def weather(*args) -> str:
     if len(args) == 1:
         # checking a string for digits
         if any(ch.isdigit() for ch in args[0]):
