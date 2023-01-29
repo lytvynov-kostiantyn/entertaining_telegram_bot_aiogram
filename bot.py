@@ -1,7 +1,7 @@
 import logging
 from aiogram import Bot, Dispatcher, executor, types
 import os
-import emoji
+from emoji import emojize
 
 import buttons
 import openweathermap
@@ -17,7 +17,7 @@ dp = Dispatcher(bot)
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
     await message.answer(
-        text='Hello ' + emoji.emojize(":waving_hand:"),
+        text='Hello ' + emojize(":waving_hand:"),
         reply_markup=buttons.kb_client
     )
     await message.answer(
@@ -28,12 +28,12 @@ async def start(message: types.Message):
 
 @dp.message_handler(commands=['help'])
 async def handle_help_command(message: types.Message):
-    await message.answer(text="""
-Bot features:
+    await message.answer(text=f"""
+{emojize(":robot:")} Bot features:
 1. Show current weather;
-- Show the current weather for your location (you must attach your current location to the message);
-- Show the weather in the city you specified;
-2. Show the official hryvnia exchange rate set by the national bank.
+{emojize(":round_pushpin:")} Show the current weather for your location (you must attach your current location to the message);
+{emojize(":round_pushpin:")} Show the weather in the city you specified;
+2. Show the official hryvnia exchange rate set by the national bank {emojize(":money_bag:")}.
 """)
 
 

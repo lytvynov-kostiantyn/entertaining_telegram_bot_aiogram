@@ -1,6 +1,7 @@
 import requests
 import os
 from pprint import pprint
+from emoji import emojize
 
 directions = {
     0: 'North',
@@ -31,7 +32,7 @@ def get_weather(*args) -> str:
         url = f'https://api.openweathermap.org/data/2.5/weather?q={args[0]}&APPID={key}&units=metric'
 
     elif len(args) == 2:
-        url = f'https://api.openweathermap.org/data/2.5/weather?lat={args[0]}&lon={args[1]}&appid={key}'
+        url = f'https://api.openweathermap.org/data/2.5/weather?lat={args[0]}&lon={args[1]}&appid={key}&units=metric'
 
     try:
         response = requests.get(url)
@@ -40,15 +41,15 @@ def get_weather(*args) -> str:
     else:
         if response.status_code == 200:
             data = response.json()
-            pprint(data)
+            # pprint(data)
             weather = {
                 'Country': data['sys']['country'],
                 'City': data['name'],
                 'Weather': data['weather'][0]['main'],
-                'Temperature, °C': data['main']['temp'],
-                'Temperature(feels like), °C': data['main']['feels_like'],
-                'Wind direction': wind_convert(data['wind']['deg']),
-                'Wind speed, m/s': data['wind']['speed'],
+                f'{emojize(":thermometer:")} Temperature, °C': data['main']['temp'],
+                f'{emojize(":thermometer:")} Temperature(feels like), °C': data['main']['feels_like'],
+                f'{emojize(":dashing_away:")} Wind direction': wind_convert(data['wind']['deg']),
+                f'{emojize(":dashing_away:")} Wind speed, m/s': data['wind']['speed'],
             }
 
         if not weather:
