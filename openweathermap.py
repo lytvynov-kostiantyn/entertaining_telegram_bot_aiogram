@@ -36,6 +36,8 @@ async def get_weather(*args) -> str:
 
     async with aiohttp.request('get', url) as response:
         data = await response.json()
+        if data['cod'] == "404":
+            return 'City not found'
         # pprint(data)
 
     weather = {

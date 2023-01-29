@@ -12,7 +12,8 @@ kb_client.row(b1,b2).add(b3)
 # Inline keyboard buttons
 BTN_WEATHER = InlineKeyboardButton('Weather', callback_data='weather')
 BTN_EXCHANGE_RATE = InlineKeyboardButton('Official exchange rate UAH', callback_data='exchange_rate')
-MENU = InlineKeyboardMarkup().add(BTN_WEATHER).add(BTN_EXCHANGE_RATE)
+BTN_CRYPTO_RATE = InlineKeyboardButton('Cryptocurrency rate to USD', callback_data='crypto_rate')
+MENU = InlineKeyboardMarkup().add(BTN_WEATHER).add(BTN_EXCHANGE_RATE).add(BTN_CRYPTO_RATE)
 
 
 LOCAL_WEATHER = InlineKeyboardButton('Weather in your current location', callback_data='local_weather')

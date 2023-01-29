@@ -23,4 +23,8 @@ async def exchange_rate():
                 flag = COUNTIES.get(val['cc'])
                 rates[flag] = f"{round(val['rate'], 3)} UAH {emojize(':Ukraine:')}"
 
-        return ''.join([f'{key}: {value}\n' for key, value in rates.items()])
+        if not rates:
+            return 'The server is not responding, please try again later or contact administrator.'
+        else:
+            result = ''.join([f'{key}: {value}\n' for key, value in rates.items()])
+            return result

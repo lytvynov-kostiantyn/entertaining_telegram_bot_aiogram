@@ -6,6 +6,7 @@ from emoji import emojize
 import buttons
 import openweathermap
 import UAH_rate
+import crypto_rate
 
 
 logging.basicConfig(level=logging.INFO)
@@ -34,7 +35,8 @@ async def handle_help_command(message: types.Message):
 {emojize(":round_pushpin:")} Show the current weather for your location (you must attach your current \
 location to the message);
 {emojize(":round_pushpin:")} Show the weather in the city you specified;
-2. Show the official hryvnia exchange rate set by the national bank {emojize(":money_bag:")}.
+2. Show the official hryvnia exchange rate set by the national bank {emojize(":money_bag:")};
+3. Show the latest cryptocurrency rate to USD {emojize(":money_with_wings:")}.
 """)
 
 
@@ -93,6 +95,15 @@ async def exchange_rate_select(callback_query: types.CallbackQuery):
         text=data
     )
 
+
+@dp.callback_query_handler(text='crypto_rate')
+async def exchange_crypto_rate(callback_query: types.CallbackQuery):
+    await bot.answer_callback_query(callback_query.id)
+    data = await crypto_rate.get_crypto_rate()
+    await bot.send_message(
+        callback_query.from_user.id,
+        text=data
+    )
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
