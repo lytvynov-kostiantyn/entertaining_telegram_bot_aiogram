@@ -3,7 +3,7 @@ from aiogram import Bot, Dispatcher, executor, types
 import os
 import emoji
 
-import logic
+import main
 import buttons
 
 
@@ -14,7 +14,7 @@ dp = Dispatcher(bot)
 
 
 @dp.message_handler(commands=['start'])
-async def main(message: types.Message):
+async def start(message: types.Message):
     await message.answer(
         text='Hello ' + emoji.emojize(":waving_hand:"),
         reply_markup=buttons.kb_client
@@ -60,7 +60,7 @@ async def handle_location(message: types.Message):
     lat = message.location.latitude
     lon = message.location.longitude
     await message.answer(
-        text=logic.weather(lat, lon)
+        text=main.weather(lat, lon)
     )
 
 
@@ -76,7 +76,7 @@ async def weather_in_city(callback_query: types.CallbackQuery):
 @dp.message_handler(content_types=['text'])
 async def get_city_name(msg: types.Message):
     await msg.answer(
-       text=logic.weather(msg.text)
+       text=main.weather(msg.text)
     )
 
 
@@ -85,7 +85,7 @@ async def exchange_rate_select(callback_query: types.CallbackQuery):
     await bot.answer_callback_query(callback_query.id)
     await bot.send_message(
         callback_query.from_user.id,
-        text=logic.get_rates(),
+        text=main.get_rates(),
     )
 
 

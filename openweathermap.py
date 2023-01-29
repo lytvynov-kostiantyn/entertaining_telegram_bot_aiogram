@@ -12,7 +12,6 @@ directions = {
     6: 'West',
     7: 'Northwest',
     8: 'North',
-
 }
 
 
