@@ -31,9 +31,11 @@ async def handle_help_command(message: types.Message):
     await message.answer(text=f"""
 {emojize(":robot:")} Bot features:
 1. Show current weather;
-{emojize(":round_pushpin:")} Show the current weather for your location (you must attach your current location to the message);
+{emojize(":round_pushpin:")} Show the current weather for your location (you must 
+attach your current location to the message);
 {emojize(":round_pushpin:")} Show the weather in the city you specified;
-2. Show the official hryvnia exchange rate set by the national bank {emojize(":money_bag:")}.
+2. Show the official hryvnia exchange rate set by 
+the national bank {emojize(":money_bag:")}.
 """)
 
 
@@ -76,8 +78,9 @@ async def weather_in_city(callback_query: types.CallbackQuery):
 
 @dp.message_handler(content_types=['text'])
 async def get_city_name(msg: types.Message):
+    data = await openweathermap.get_weather(msg.text)
     await msg.answer(
-       text=openweathermap.get_weather(msg.text)
+       text=data
     )
 
 
