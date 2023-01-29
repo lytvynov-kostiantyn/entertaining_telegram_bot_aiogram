@@ -45,5 +45,7 @@ def get_weather(city: str) -> dict:
 
         return weather
 
-# pprint(get_weather('123'))
-# pprint(get_weather('odesa'))
+
+if __name__ == "__main__":
+    pprint(get_weather('123'))
+    pprint(get_weather('odesa'))

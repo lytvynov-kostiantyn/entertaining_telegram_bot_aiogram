@@ -30,4 +30,6 @@ def exchange_rate():
 
             return rates
 
-# exchange_rate()
+
+if __name__ == "__main__":
+    exchange_rate()
