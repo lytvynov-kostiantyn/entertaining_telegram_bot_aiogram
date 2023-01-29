@@ -5,7 +5,7 @@ from emoji import emojize
 
 import buttons
 import openweathermap
-import rate
+import UAH_rate
 
 
 logging.basicConfig(level=logging.INFO)
@@ -31,11 +31,10 @@ async def handle_help_command(message: types.Message):
     await message.answer(text=f"""
 {emojize(":robot:")} Bot features:
 1. Show current weather;
-{emojize(":round_pushpin:")} Show the current weather for your location (you must 
-attach your current location to the message);
+{emojize(":round_pushpin:")} Show the current weather for your location (you must attach your current \
+location to the message);
 {emojize(":round_pushpin:")} Show the weather in the city you specified;
-2. Show the official hryvnia exchange rate set by 
-the national bank {emojize(":money_bag:")}.
+2. Show the official hryvnia exchange rate set by the national bank {emojize(":money_bag:")}.
 """)
 
 
@@ -62,8 +61,9 @@ async def weather_in_location(callback_query: types.CallbackQuery):
 async def handle_location(message: types.Message):
     lat = message.location.latitude
     lon = message.location.longitude
+    data = await openweathermap.get_weather(lat, lon)
     await message.answer(
-        text=openweathermap.get_weather(lat, lon)
+        text=data
     )
 
 
@@ -78,7 +78,7 @@ async def weather_in_city(callback_query: types.CallbackQuery):
 
 @dp.message_handler(content_types=['text'])
 async def get_city_name(msg: types.Message):
-    data = openweathermap.get_weather(msg.text)
+    data = await openweathermap.get_weather(msg.text)
     await msg.answer(
        text=data
     )
@@ -87,9 +87,10 @@ async def get_city_name(msg: types.Message):
 @dp.callback_query_handler(text='exchange_rate')
 async def exchange_rate_select(callback_query: types.CallbackQuery):
     await bot.answer_callback_query(callback_query.id)
+    data = await UAH_rate.exchange_rate()
     await bot.send_message(
         callback_query.from_user.id,
-        text=rate.exchange_rate(),
+        text=data
     )
 
 
