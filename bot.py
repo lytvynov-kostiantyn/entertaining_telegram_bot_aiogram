@@ -3,8 +3,9 @@ from aiogram import Bot, Dispatcher, executor, types
 import os
 import emoji
 
-import main
 import buttons
+import openweathermap
+import rate
 
 
 logging.basicConfig(level=logging.INFO)
@@ -60,7 +61,7 @@ async def handle_location(message: types.Message):
     lat = message.location.latitude
     lon = message.location.longitude
     await message.answer(
-        text=main.weather(lat, lon)
+        text=openweathermap.get_weather(lat, lon)
     )
 
 
@@ -76,7 +77,7 @@ async def weather_in_city(callback_query: types.CallbackQuery):
 @dp.message_handler(content_types=['text'])
 async def get_city_name(msg: types.Message):
     await msg.answer(
-       text=main.weather(msg.text)
+       text=openweathermap.get_weather(msg.text)
     )
 
 
@@ -85,7 +86,7 @@ async def exchange_rate_select(callback_query: types.CallbackQuery):
     await bot.answer_callback_query(callback_query.id)
     await bot.send_message(
         callback_query.from_user.id,
-        text=main.get_rates(),
+        text=rate.exchange_rate(),
     )
 
 

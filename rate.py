@@ -28,8 +28,8 @@ def exchange_rate():
                     flag = COUNTIES.get(val['cc'])
                     rates[flag] = f"{round(val['rate'], 3)} UAH {emojize(':Ukraine:')}"
 
-            return rates
+            return ''.join([f'{key}: {value}\n' for key, value in rates.items()])
 
 
 if __name__ == "__main__":
-    exchange_rate()
+    pprint(exchange_rate())

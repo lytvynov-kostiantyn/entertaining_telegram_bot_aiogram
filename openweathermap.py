@@ -20,19 +20,27 @@ def wind_convert(deg: int) -> str:
     return directions[direction]
 
 
-def get_weather(city: str) -> dict:
+def get_weather(*args) -> str:
     key = os.getenv('WEATHER_API_KEY')
     weather = dict()
+
+    if len(args) == 1:
+        # checking a string for digits
+        if any(ch.isdigit() for ch in args[0]):
+            return 'Invalid input'
+        url = f'https://api.openweathermap.org/data/2.5/weather?q={args[0]}&APPID={key}&units=metric'
+
+    elif len(args) == 2:
+        url = f'https://api.openweathermap.org/data/2.5/weather?lat={args[0]}&lon={args[1]}&appid={key}'
+
     try:
-        response = requests.get(
-            f'https://api.openweathermap.org/data/2.5/weather?q={city}&APPID={key}&units=metric'
-        )
+        response = requests.get(url)
     except requests.exceptions.RequestException:
-        return weather
+        return 'The server is not responding, please try again later or contact administrator.'
     else:
         if response.status_code == 200:
             data = response.json()
-            # pprint(data)
+            pprint(data)
             weather = {
                 'Country': data['sys']['country'],
                 'City': data['name'],
@@ -43,9 +51,14 @@ def get_weather(city: str) -> dict:
                 'Wind speed, m/s': data['wind']['speed'],
             }
 
-        return weather
+        if not weather:
+            return 'The server is not responding, please try again later or contact administrator.'
+        else:
+            result = ''.join([f'{key}: {value}\n' for key, value in weather.items()])
+            return result
 
 
 if __name__ == "__main__":
     pprint(get_weather('123'))
-    pprint(get_weather('odesa'))
+    pprint(get_weather('New York'))
+    pprint(get_weather('46.425583', '30.729843'))
