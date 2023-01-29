@@ -78,7 +78,7 @@ async def weather_in_city(callback_query: types.CallbackQuery):
 
 @dp.message_handler(content_types=['text'])
 async def get_city_name(msg: types.Message):
-    data = await openweathermap.get_weather(msg.text)
+    data = openweathermap.get_weather(msg.text)
     await msg.answer(
        text=data
     )
