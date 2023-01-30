@@ -1,6 +1,5 @@
-## Educational project of simple telegram bot on aiogram framework
+# Educational project of simple telegram bot on aiogram framework
 
----
 ### Bot features:
 1. Show current weather:
    * Show the current weather for your location (you must attach your current location to the message);
