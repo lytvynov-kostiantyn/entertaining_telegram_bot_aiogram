@@ -1,3 +1,2 @@
-geopy
 emoji
 aiogram
