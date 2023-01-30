@@ -8,7 +8,7 @@
 3. Show the latest cryptocurrency rate to USD.
 
 ---
-### Video Demo: [YouTube](http://example.com/)
+### Video Demo: [YouTube](https://youtu.be/lOlyZjSbJ3g)
 
 ---
 ### Under the hood:
