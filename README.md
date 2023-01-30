@@ -1,4 +1,4 @@
-# Educational project of simple telegram bot on aiogram framework
+## Educational project of simple telegram bot on aiogram framework
 
 ---
 ### Bot features:
